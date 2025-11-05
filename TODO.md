@@ -1,7 +1,6 @@
-# TODO: Fix Import Error for Amplify Configuration
+# TODO: Fix Build Errors
 
-## Steps to Complete
-- [x] Modify `src/components/AmplifyProvider.tsx` to conditionally import and configure Amplify only if `amplify_outputs.json` exists.
-- [x] Remove unused import of `AmplifyClientConfig` from `src/app/layout.tsx`.
-- [x] Update `README.md` with setup instructions, including how to run `npm install` and set up Amplify.
-- [ ] Verify the app runs without errors after changes.
+- [ ] Remove unused 'FieldSeparator' import from login-form.tsx
+- [ ] Remove unused 'err' variable in catch block of login-form.tsx
+- [ ] Replace Math.random() with fixed width in SidebarMenuSkeleton of sidebar.tsx
+- [ ] Run npm run build to verify fixes

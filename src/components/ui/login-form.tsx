@@ -11,7 +11,6 @@ import {
   FieldDescription,
   FieldGroup,
   FieldLabel,
-  FieldSeparator,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 
@@ -62,7 +61,7 @@ export function LoginForm({
       setTimeout(() => {
         router.push('/admin')
       }, 1000) // Simulate API call delay
-    } catch (err) {
+    } catch {
       setError('An error occurred during login')
     } finally {
       setLoading(false)
