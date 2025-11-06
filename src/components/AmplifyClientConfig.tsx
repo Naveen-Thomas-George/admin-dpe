@@ -1,19 +1,39 @@
 'use client';
 
 import { Amplify } from 'aws-amplify';
-// The outputs file is generated in the root of your project 
-// when you run `npx ampx sandbox` or deploy your backend.
-import outputs from '../../amplify_outputs.json';
+import '@aws-amplify/ui-react/styles.css';
 
-// Note: You may need to create a global CSS file for Amplify UI styles
-// if you plan to use the built-in Authenticator component.
-import '@aws-amplify/ui-react/styles.css'; 
+/**
+ * Dynamically configures Amplify for the client.
+ * This version avoids require() and supports both JSON + env-based config.
+ */
+async function configureAmplify() {
+  try {
+    // ✅ Try dynamic import for amplify_outputs.json (avoids ESLint error)
+    const outputs = await import('../../amplify_outputs.json');
+    Amplify.configure(outputs.default || outputs, { ssr: true });
+  } catch (err) {
+    // ✅ Fallback to environment variable-based config (optional)
+    if (process.env.NEXT_PUBLIC_AMPLIFY_CONFIG) {
+      Amplify.configure(
+        JSON.parse(process.env.NEXT_PUBLIC_AMPLIFY_CONFIG),
+        { ssr: true }
+      );
+    } else {
+      console.warn(
+        '⚠️ Amplify configuration skipped — no amplify_outputs.json or env config found.'
+      );
+    }
+  }
+}
 
-// Configure Amplify once on the client side
-// The { ssr: true } option is important for Next.js to use cookies for token storage.
-Amplify.configure(outputs, { ssr: true });
+// Run configuration once on load
+configureAmplify();
 
-// This component is purely for configuration and does not render any UI.
+/**
+ * This component is purely for Amplify setup.
+ * It renders nothing.
+ */
 export default function AmplifyClientConfig() {
   return null;
 }
